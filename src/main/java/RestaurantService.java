@@ -1,13 +1,20 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RestaurantService {
     private static List<Restaurant> restaurants = new ArrayList<>();
 
-    public Restaurant findRestaurantByName(String restaurantName){
-        return null;
-        //DELETE ABOVE STATEMENT AND WRITE CODE HERE
+    public Restaurant findRestaurantByName(String restaurantName) throws restaurantNotFoundException{        
+    	if(restaurantName==null || restaurantName.length()==0)
+    		return null;
+    	
+		Optional<Restaurant> restaurant = restaurants.stream().filter(r -> r.getName().equals(restaurantName))
+				.findFirst();
+		if (restaurant.isPresent())
+			return restaurant.get();
+		throw new restaurantNotFoundException("Not Found!");
     }
 
 

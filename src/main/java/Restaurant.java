@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +5,9 @@ import java.util.List;
 public class Restaurant {
     private String name;
     private String location;
-    public LocalTime openingTime;
+	public LocalTime openingTime;
     public LocalTime closingTime;
+    public LocalTime currentTime;
     private List<Item> menu = new ArrayList<Item>();
 
     public Restaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
@@ -18,15 +18,26 @@ public class Restaurant {
     }
 
     public boolean isRestaurantOpen() {
-        return true;
-        //DELETE ABOVE STATEMENT AND WRITE CODE HERE
+    	
+    	if(closingTime==null || openingTime==null)
+    		return false;
+    	if(currentTime==null)
+    		setCurrentTime(LocalTime.now());
+    	if(getCurrentTime().isBefore(closingTime) && getCurrentTime().isAfter(openingTime))
+    		return true;
+    	
+    	return false;
     }
 
-    public LocalTime getCurrentTime(){ return  LocalTime.now(); }
+    public LocalTime getCurrentTime(){ return  currentTime; }
+    
+    public void setCurrentTime(LocalTime currentTime)
+    {
+    	this.currentTime=currentTime;
+    }
 
     public List<Item> getMenu() {
-        return null;
-        //DELETE ABOVE RETURN STATEMENT AND WRITE CODE HERE
+       return menu;
     }
 
     private Item findItemByName(String itemName){
@@ -62,5 +73,17 @@ public class Restaurant {
     public String getName() {
         return name;
     }
+    
+    public String getLocation() {
+		return location;
+	}
+    
+	public LocalTime getOpeningTime() {
+		return openingTime;
+	}
+
+	public LocalTime getClosingTime() {
+		return closingTime;
+	}
 
 }
