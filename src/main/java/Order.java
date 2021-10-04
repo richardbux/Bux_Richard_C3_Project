@@ -3,10 +3,11 @@ import java.util.List;
 
 public class Order {
 	int orderTotal;
-	private static List<Item> cart = new ArrayList<>();
+	private List<Item> cart = new ArrayList<>();
 
 	public Order() {
 		this.orderTotal = 0;
+		this.cart= new ArrayList<>();
 	}
 
 	public List<Item> getCart() {
@@ -14,10 +15,15 @@ public class Order {
 	}
 
 	public int getOrderTotal(List<Item> userCart) {
-		return -1;
+		for(Item item: userCart) {
+            this.orderTotal += item.getPrice();
+        }
+        return this.orderTotal;
 	}
 
 	public void addToCart(String name, int price) {
+		Item newItem = new Item(name,price);
+        this.cart.add(newItem);
 	}
 
 }
